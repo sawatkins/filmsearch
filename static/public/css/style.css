@@ -17,10 +17,7 @@ a {
   color: #9eb6dd;
 }
 
-/* a:visited {
-  color: #995bd7;
-} */
-a:hover {
+#navbar a:hover {
   background-color: rgba(81, 91, 112, 0.7);
   /* background-color: rgba(0, 0, 0, 0.18); */
 }
@@ -61,15 +58,10 @@ div.flexcontainer {
 }
 
 div.flexitem {
-  /* width: 48%; */
-  /* width: fit-content; */
   margin: 0px 20px;
-
 }
 
 div#welcome-text {
-  /* flex-basis: auto; */
-
   flex-basis: 45%;
 } 
 
@@ -151,21 +143,6 @@ textarea::placeholder {
   color: #999;
 }
 
-#faq {
-  line-height: 1em;
-}
-
-#faq p {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-#back-to-summarize:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-
 .spin {
   border: 3px solid #556177;
   border-radius: 50%;
@@ -185,49 +162,4 @@ textarea::placeholder {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-#demo-gif {
-  /* border: 1px solid #ccc;
-  background-color: #23272a;
-  border-radius: 6px;
-  display: block;
-  margin: 0 auto; */
-  display: block;
-  margin: auto;
-  /* width: 800px; */
-  width: 100%;
-  max-width: 800px;
-}
-
-.demo-gif-class {
-  position: relative;
-  display: inline-block;
-  background-color: #25262b;
-  /* padding: 10px; */
-  padding: 2%;
-  /* margin-left: 40px;
-  margin-right: 40px; */
-  /* line-height: 1rem; */
-  margin: auto;
-}
-.demo-gif-class h2 {
-  margin-top: 0.4rem;
-}
-
-.demo-gif-class::before {
-  content: "";
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  bottom: -5px;
-  left: -5px;
-  background-color: #44a9b7;
-  z-index: -1;
-}
-
-#stats h3, #stats ul {
-  margin-top: 0.4rem;
-  margin-bottom: 0.4rem;
-  
 }

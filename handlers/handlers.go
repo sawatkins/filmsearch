@@ -4,20 +4,27 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// NotFound returns custom 404 page
 func NotFound(c *fiber.Ctx) error {
 	return c.Status(404).SendFile("./static/private/404.html")
 }
 
 func Index(c *fiber.Ctx) error {
 	return c.Render("index", fiber.Map{
-		"Title": "Hello, World!",
+		"Title": "Hello, Index!",
 	}, "layouts/main")
 }
 
-func Faq(c *fiber.Ctx) error {
-	return c.Render("faq", fiber.Map{
-		"Title": "Hello, FAQ!",
+func Search(c *fiber.Ctx) error {
+	query := c.Query("q")
+
+	return c.Render("search", fiber.Map{
+		"Query": query,
+	}, "layouts/main")
+}
+
+func About(c *fiber.Ctx) error {
+	return c.Render("about", fiber.Map{
+		"Title": "Hello, About!",
 	}, "layouts/main")
 }
 

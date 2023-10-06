@@ -69,7 +69,8 @@ func main() {
 
 	// Routes
 	app.Get("/", handlers.Index)
-	app.Get("/faq", handlers.Faq)
+	app.Get("/search", handlers.Search)
+	app.Get("/about", handlers.About)
 
 	// Handle not founds
 	app.Use(handlers.NotFound)
