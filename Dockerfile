@@ -1,4 +1,4 @@
-FROM golang:1.20
+FROM golang:1.21
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ COPY . .
 
 RUN go mod download
 
-RUN go build -o eureak-search .
+RUN go build -o eureka-search .
 
 EXPOSE 8080
 
