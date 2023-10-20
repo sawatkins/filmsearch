@@ -38,7 +38,8 @@ div#title h3 {
 }
 
 body {
-  background-color: #1a1b1e; /* #374151; */
+  background-color: #1a1b1e;
+  /* #374151; */
   color: #DEDEDE;
   line-height: 1.4em;
   width: 55%;
@@ -54,7 +55,7 @@ div.flexcontainer {
   display: flex;
   justify-content: flex-start;
   flex-wrap: nowrap;
-  align-items: flex-start; 
+  align-items: flex-start;
 }
 
 div.flexitem {
@@ -63,7 +64,7 @@ div.flexitem {
 
 div#welcome-text {
   flex-basis: 45%;
-} 
+}
 
 div#banner {
   text-align: center;
@@ -112,7 +113,7 @@ input[type="file"] {
 }
 
 .action-button:hover {
-  background-color: #55b8c5; 
+  background-color: #55b8c5;
   text-decoration: underline;
 }
 
@@ -127,21 +128,21 @@ input[type="file"] {
   line-height: 1.3em;
 }
 
-textarea {
+/* textarea {
   width: 66%;
   height: 55px;
   padding: 12px;
   border: 1px solid #ccc;
   background-color: #23272a;
   /* font-family: Arial, sans-serif; */
-  font-size: 13px;
+  /* font-size: 13px;
   border-radius: 6px;
   color: #DEDEDE;
 }
 
 textarea::placeholder {
   color: #999;
-}
+} */ 
 
 .spin {
   border: 3px solid #556177;
@@ -150,16 +151,55 @@ textarea::placeholder {
   width: 20px;
   height: 20px;
   margin-top: 1rem;
-  -webkit-animation: spin 0.43s cubic-bezier(.7,.05,.4,.88) infinite;
-  animation: spin 0.43s cubic-bezier(.7,.05,.4,.88) infinite;
+  -webkit-animation: spin 0.43s cubic-bezier(.7, .05, .4, .88) infinite;
+  animation: spin 0.43s cubic-bezier(.7, .05, .4, .88) infinite;
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
+
+.flexbox-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#search-input {
+  width: 400px;
+  padding: 0.5rem 1rem;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  background-color: #3c3d3e;
+  /* font-size: 1.1rem; */
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Style for focus state */
+#search-input:focus {
+  border-color: inherit;
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
