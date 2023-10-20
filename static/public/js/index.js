@@ -10,13 +10,4 @@ function handleSearchInput(event) {
     let params = new URLSearchParams();
     params.append("q", searchQuery)
     window.location.href = "/search?" + params
-
-    // fetch("/search?" + params)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log(data)
-    //     })
-    //     .catch(error => {
-    //         console.log(error)
-    //     })
 }
