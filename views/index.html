@@ -1,6 +1,18 @@
 {{template "partials/navbar" .}}
 
-<p>Eureka Search</p>
+<div class="flexbox-center">
+    <p style="font-size: 1.15rem;">Search for movies using natural language</p>
+</div>
 
-<!-- <script src="/js/index.js" async></script> -->
+<div id="search-input-wrapper" class="flexbox-center">
+    <form id="search-form">
+        <input type="text" name="search-input" id="search-input" autocomplete="off" autocapitalize="off"
+            autocorrect="off" placeholder="Search...">
+        <input type="submit" style="display: none;">
+    </form>
+</div>
+
+
+
+<script src="/js/index.js" async></script>
 {{template "partials/footer" .}}
