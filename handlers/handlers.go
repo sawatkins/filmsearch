@@ -14,14 +14,6 @@ func Index(c *fiber.Ctx) error {
 	}, "layouts/main")
 }
 
-func Search(c *fiber.Ctx) error {
-	query := c.Query("q")
-
-	return c.Render("search", fiber.Map{
-		"Query": query,
-	}, "layouts/main")
-}
-
 func About(c *fiber.Ctx) error {
 	return c.Render("about", fiber.Map{
 		"Title": "Hello, About!",

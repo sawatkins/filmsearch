@@ -1,7 +1,15 @@
 {{template "partials/navbar" .}}
 
-<p>Search Results</p>
-<p>Query: {{.Query}}</p>
+<a href="/">← Back</a>
+
+<p>Results for: {{.Query}}</p>
+{{if .Results}}
+    {{range .Results}}
+        <li>{{.}}</li>
+    {{end}}
+{{else}}
+    <li>No results found</li>
+{{end}}
 
 <!-- <script src="/js/index.js" async></script> -->
 {{template "partials/footer" .}}
