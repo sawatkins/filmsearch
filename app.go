@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -12,9 +13,9 @@ import (
 	// "github.com/aws/aws-sdk-go-v2/config"
 	// "github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/joho/godotenv"
+	openai "github.com/sashabaranov/go-openai"
 
 	"github.com/sawatkins/eureka-search/handlers"
-
 )
 
 var (
@@ -41,6 +42,7 @@ func main() {
 	// }
 	// s3Client := s3.NewFromConfig(cfg)
 	// s3PresignClient := s3.NewPresignClient(s3Client)
+	openaiClient := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
 
 	// Create a new engine
 	engine := html.New("./views", ".html")
@@ -71,6 +73,8 @@ func main() {
 	app.Get("/", handlers.Index)
 	app.Get("/search", handlers.Search)
 	app.Get("/about", handlers.About)
+	// Non-user routes
+	app.Get("/api/openai", handlers.Openai(openaiClient))
 
 	// Handle not founds
 	app.Use(handlers.NotFound)

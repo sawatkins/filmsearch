@@ -7,6 +7,8 @@ require (
 	github.com/gofiber/template/html/v2 v2.0.0
 )
 
+require github.com/sashabaranov/go-openai v1.17.9
+
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/gofiber/utils v1.1.0 // indirect
