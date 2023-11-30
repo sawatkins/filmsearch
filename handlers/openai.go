@@ -26,7 +26,7 @@ func Openai(openaiClient *openai.Client) fiber.Handler {
 			return c.SendStatus(500)
 		}
 		return c.Status(200).JSON(fiber.Map{
-			"response": resp.Choices.
+			"response": resp.Choices[0].Message.Content,
 		})
 	}
 }
