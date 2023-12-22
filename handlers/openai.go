@@ -16,7 +16,7 @@ func Openai(openaiClient *openai.Client) fiber.Handler {
 				Type: openai.ChatCompletionResponseFormatTypeJSONObject,
 			},
 			Messages: []openai.ChatCompletionMessage{
-				{Role: "system", Content: "You are a movie search engine. Users will try to input text relating to a movie they are trying to find. Your job is to return the relevent movie. Respont in JSON."},
+				{Role: "system", Content: "You are a movie search engine. Users will input text describing movies they are trying to find. Your job is to return the relevent movie. Respont in JSON with only the relevent movie titles and years they were released. Use the format from the example: \"{ \"movies\": [ {  \"title\": \"Lost in Translation\", \"year\": 2003 }, {\"title\": \"Her\",\"year\": 2013}]}"},
 				{Role: "user", Content: c.Query("query")},
 			},
 		}
@@ -25,8 +25,6 @@ func Openai(openaiClient *openai.Client) fiber.Handler {
 			fmt.Println(err)
 			return c.SendStatus(500)
 		}
-		return c.Status(200).JSON(fiber.Map{
-			"response": resp.Choices[0].Message.Content,
-		})
+		return c.Status(200).JSON(resp.Choices[0].Message.Content)
 	}
 }
