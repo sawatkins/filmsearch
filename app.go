@@ -71,7 +71,7 @@ func main() {
 
 	// Routes
 	app.Get("/", handlers.Index)
-	app.Get("/search", handlers.Search)
+	app.Get("/search", handlers.Search(openaiClient))
 	app.Get("/about", handlers.About)
 	// Non-user routes
 	app.Get("/api/openai", handlers.Openai(openaiClient))

@@ -1,73 +1,99 @@
 package handlers
 
 import (
+	// "encoding/json"
+	// "fmt"
+	// "io"
+	// "os"
+
 	"encoding/json"
 	"fmt"
-	"io"
-	"os"
 
 	"github.com/gofiber/fiber/v2"
-	"golang.org/x/exp/slices"
+	openai "github.com/sashabaranov/go-openai"
 )
 
 type Movie struct {
-	ID       int      `json:"id"`
 	Title    string   `json:"title"`
-	Keywords []string `json:"keywords"`
+	Year	 int	  `json:"year"`
 }
 
 type Movies struct {
 	Movies []Movie `json:"movies"`
 }
 
-func Search(c *fiber.Ctx) error {
-	query := c.Query("q")
-	releventMovies := make([]string, 0)
-	// read data into map
-	// data, err := getData()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// loop through map & select each movie
-	// fmt.Println(data)
-	// movies, ok := data["movies"].(map[string]interface{})
-	// if !ok {
-	// 	fmt.Println("Could not convert data['movies'] to []string")
-	// 	return err
-	// }
-	// for key, _ := range movies {
-	// 	fmt.Println("title: " + key)
-	// }
-
-	jsonFile, err := os.Open("scripts/topmovieswkeywords.json")
-	if err != nil {
-		fmt.Println("Couldn't open the file:", err)
-		return err
-	}
-	defer jsonFile.Close()
-
-	byteValue, _ := io.ReadAll(jsonFile)
-
-	var movies Movies
-	// Unmarshal the JSON data into our Movies struct
-	json.Unmarshal(byteValue, &movies)
-
-	// Loop through each movie and print its values
-	for _, movie := range movies.Movies {
-		// fmt.Printf("Movie %d:\n", i+1)
-		// fmt.Println("ID:", movie.ID)
-		// fmt.Println("Title:", movie.Title)
-		// fmt.Println("Keywords:", movie.Keywords)
-		// first attempt ==> loop through every item, if keyword match, print title
-		if slices.Contains(movie.Keywords, query) {
-			releventMovies = append(releventMovies, movie.Title)
+func Search(openaiClient *openai.Client) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		query := c.Query("q")
+		// releventMovies := make([]string, 0)
+		movies, err := openaiMovieCompletion(openaiClient, query)
+		if err != nil {
+			fmt.Println(err)
+			return c.SendStatus(500) // maybe this should just dirent to a "try again later page"
 		}
+		// create an array of movie names and years 
+		// read data into map
+		// data, err := getData()
+		// if err != nil {
+		// 	fmt.Println(err)
+		// }
+		// loop through map & select each movie
+		// fmt.Println(data)
+		// movies, ok := data["movies"].(map[string]interface{})
+		// if !ok {
+		// 	fmt.Println("Could not convert data['movies'] to []string")
+		// 	return err
+		// }
+		// for key, _ := range movies {
+		// 	fmt.Println("title: " + key)
+		// }
+
+		// jsonFile, err := os.Open("scripts/topmovieswkeywords.json")
+		// if err != nil {
+		// 	fmt.Println("Couldn't open the file:", err)
+		// 	return err
+		// }
+		// defer jsonFile.Close()
+
+		// byteValue, _ := io.ReadAll(jsonFile)
+
+		// var movies Movies
+		// // Unmarshal the JSON data into our Movies struct
+		// json.Unmarshal(byteValue, &movies)
+
+		// // Loop through each movie and print its values
+		// for _, movie := range movies.Movies {
+		// 	// fmt.Printf("Movie %d:\n", i+1)
+		// 	// fmt.Println("ID:", movie.ID)
+		// 	// fmt.Println("Title:", movie.Title)
+		// 	// fmt.Println("Keywords:", movie.Keywords)
+		// 	// first attempt ==> loop through every item, if keyword match, print title
+		// 	if slices.Contains(movie.Keywords, query) {
+		// 		releventMovies = append(releventMovies, movie.Title)
+		// 	}
+		// }
+
+		return c.Render("search", fiber.Map{
+			"Query":   query,
+			"Results": unmarshallMovieTitles(movies),
+		}, "layouts/main")
+	}
+}
+
+func unmarshallMovieTitles(data string) []string {
+	var movies Movies
+	err := json.Unmarshal([]byte(data), &movies)
+	if err != nil {
+		fmt.Println(err)
+		return nil // is this the best way to handle errors?
 	}
 
-	return c.Render("search", fiber.Map{
-		"Query":   query,
-		"Results": releventMovies,
-	}, "layouts/main")
+	var movieTitles []string
+	for _, movie := range movies.Movies {
+		movieTitles = append(movieTitles, fmt.Sprintf("%s (%d)", movie.Title, movie.Year))
+	}
+	fmt.Println(movieTitles)
+	return movieTitles
 }
 
 // func getData() (map[string]interface{}, error) {
