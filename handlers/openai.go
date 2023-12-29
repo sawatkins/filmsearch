@@ -8,6 +8,8 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 )
 
+const MODEL = "gpt-3.5-turbo-1106" //gpt-3.5-turbo-1106
+
 func Openai(openaiClient *openai.Client) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		movies, err := openaiMovieCompletion(openaiClient, c.Query("query"))
@@ -21,7 +23,7 @@ func Openai(openaiClient *openai.Client) fiber.Handler {
 
 func openaiMovieCompletion(openaiClient *openai.Client, query string) (string, error) {
 	request := openai.ChatCompletionRequest{
-		Model: "gpt-3.5-turbo-1106",
+		Model: MODEL,
 		ResponseFormat: &openai.ChatCompletionResponseFormat{
 			Type: openai.ChatCompletionResponseFormatTypeJSONObject,
 		},
