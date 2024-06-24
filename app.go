@@ -45,7 +45,7 @@ func main() {
 	// Create a new engine
 	engine := html.New("./views", ".html")
 	if *dev {
-		engine.Reload(true) 
+		engine.Reload(true)
 		engine.Debug(true)  
 	}
 
