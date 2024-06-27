@@ -3,3 +3,4 @@ node_modules/
 package.json
 bun.lockb
 .env
+.DS_Store

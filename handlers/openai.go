@@ -8,7 +8,8 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 )
 
-const MODEL = "gpt-4o" //gpt-3.5-turbo-1106
+const MODEL = "gpt-4o" 
+const PROMPT = "You are a movie search engine. Users will input text describing movies they are trying to find. Your job is to return the relevent movie. Respont in JSON with only the relevent movie titles and years they were released. Use the format from this example: { \"movies\": [ {  \"title\": \"Lost in Translation\", \"year\": 2003 }, {\"title\": \"Her\",\"year\": 2013}]}"
 
 func Openai(openaiClient *openai.Client) fiber.Handler {
 	return func(c *fiber.Ctx) error {
@@ -28,7 +29,7 @@ func openaiMovieCompletion(openaiClient *openai.Client, query string) (string, e
 			Type: openai.ChatCompletionResponseFormatTypeJSONObject,
 		},
 		Messages: []openai.ChatCompletionMessage{
-			{Role: "system", Content: "You are a movie search engine. Users will input text describing movies they are trying to find. Your job is to return the relevent movie. Respont in JSON with only the relevent movie titles and years they were released. Use the format from this example: { \"movies\": [ {  \"title\": \"Lost in Translation\", \"year\": 2003 }, {\"title\": \"Her\",\"year\": 2013}]}"},
+			{Role: "system", Content: PROMPT},
 			{Role: "user", Content: query},
 		},
 	}

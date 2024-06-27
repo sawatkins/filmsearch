@@ -5,7 +5,9 @@ import (
 )
 
 func NotFound(c *fiber.Ctx) error {
-	return c.Status(404).SendFile("./static/private/404.html")
+	return c.Status(404).Render("404", fiber.Map{
+		"Message": "Not found! Please try again",
+	}, "layouts/main")
 }
 
 func Index(c *fiber.Ctx) error {
