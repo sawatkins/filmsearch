@@ -36,7 +36,7 @@ func openaiMovieCompletion(openaiClient *openai.Client, query string) (string, e
 	resp, err := openaiClient.CreateChatCompletion(context.TODO(), request)
 	if err != nil {
 		fmt.Println(err)
-		return "", err
+		return "", err // or nil?
 	}
 	return resp.Choices[0].Message.Content, nil // should i keep this as a string?, or cast to a json equivilent?
 }

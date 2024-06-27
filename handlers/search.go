@@ -3,15 +3,18 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+	"strings"
 
+	tmdb "github.com/cyruzin/golang-tmdb"
 	"github.com/gofiber/fiber/v2"
 	openai "github.com/sashabaranov/go-openai"
-	tmdb "github.com/cyruzin/golang-tmdb"
 )
 
 type Movie struct {
 	Title    string   `json:"title"`
 	Year	 int	  `json:"year"`
+	// Reason   string   `json:"reason"`
 }
 
 type Movies struct {
@@ -21,16 +24,39 @@ type Movies struct {
 func Search(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		query := c.Query("q")
-		movies, err := openaiMovieCompletion(openaiClient, query)
+		moviesJson, err := openaiMovieCompletion(openaiClient, query)
 		if err != nil {
 			fmt.Println(err)
 			return c.SendStatus(500) // maybe this should just dirent to a "try again later page"
 		}
 
+		movieTitles := unmarshallMovieTitles(moviesJson)
+
+		getTmdbInfo(tmdbClient, movieTitles)
+
 		return c.Render("search", fiber.Map{
 			"Query":   query,
-			"Results": unmarshallMovieTitles(movies),
+			"Results": movieTitles,
 		}, "layouts/main")
+	}
+}
+
+func getTmdbInfo(tmdbClient *tmdb.Client, movieTitles []string) {
+	for _, movieTitle := range movieTitles {
+
+		parts := strings.Split(movieTitle, " (")
+		title := parts[0]
+		year := strings.TrimSuffix(parts[1], ")")
+
+		searchMovie, err := tmdbClient.GetSearchMovies(title, map[string]string{
+			"Primary_release_year": year,
+		})
+		if err != nil {
+			log.Println(err)
+		}
+
+		fmt.Println(searchMovie.Results[0].Title)
+
 	}
 }
 
