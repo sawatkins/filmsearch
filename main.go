@@ -54,13 +54,13 @@ func main() {
 
 	app.Use(recover.New())
 	app.Use(logger.New())
-	app.Use(handlers.NotFound)
 	app.Static("/", "./static/public")
 
 	app.Get("/", handlers.Index)
-	app.Get("/search", handlers.Search(openaiClient))
+	app.Get("/search", handlers.Search(openaiClient, tmdbClient))
 	app.Get("/about", handlers.About)
 	app.Get("/api/openai", handlers.Openai(openaiClient))
+	app.Use(handlers.NotFound)
 
 	log.Println("Server starting on port", config.Port)
 	log.Fatal(app.Listen(config.Port)) // default port: 8080

@@ -6,6 +6,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	openai "github.com/sashabaranov/go-openai"
+	tmdb "github.com/cyruzin/golang-tmdb"
 )
 
 type Movie struct {
@@ -17,7 +18,7 @@ type Movies struct {
 	Movies []Movie `json:"movies"`
 }
 
-func Search(openaiClient *openai.Client) fiber.Handler {
+func Search(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		query := c.Query("q")
 		movies, err := openaiMovieCompletion(openaiClient, query)

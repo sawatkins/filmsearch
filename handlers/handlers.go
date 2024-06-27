@@ -6,7 +6,7 @@ import (
 
 func NotFound(c *fiber.Ctx) error {
 	return c.Status(404).Render("404", fiber.Map{
-		"Message": "Not found! Please try again",
+		"Message": "404 Not found! Please try again",
 	}, "layouts/main")
 }
 
