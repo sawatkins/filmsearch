@@ -29,13 +29,12 @@ func loadEnv() {
 }
 
 func main() {
-	flag.Parse()
-
 	config := Config{
 		Port:    *flag.String("port", ":8080", "Port to listen on"),
 		Prefork: *flag.Bool("prefork", false, "Enable prefork in Production"),
 		Dev:     *flag.Bool("dev", true, "Enable development mode"),
 	}
+	flag.Parse()
 
 	loadEnv()
 	openaiClient := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
