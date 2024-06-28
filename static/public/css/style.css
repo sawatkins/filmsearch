@@ -32,8 +32,7 @@ div#logo {
 }
 
 div#title h3 {
-  margin-top: -5px;
-  margin-left: 2px;
+  margin: -5px 0 0 2px;
   font-weight: 200;
 }
 
@@ -42,79 +41,12 @@ body {
   /* #374151; */
   color: #DEDEDE;
   line-height: 1.4em;
-  width: 50%;
+  width: 45%;
   min-width: 750px;
   margin: 15px auto;
   padding-left: 15px;
   padding-right: 15px;
   font-family: "Play", sans-serif;
-  /* min-height: 500px; */
-}
-
-div.flexcontainer {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-}
-
-div.flexitem {
-  margin: 0px 20px;
-}
-
-div#welcome-text {
-  flex-basis: 45%;
-}
-
-div#banner {
-  text-align: center;
-  background-color: #DEDEDE;
-  color: #374151;
-  font-weight: bold;
-  width: 100%;
-  margin: 0px;
-}
-
-input[type="file"] {
-  display: none;
-}
-
-#label-upload-doc {
-  border: 1px solid #ccc;
-  display: inline-block;
-  /* padding: 6px 12px; */
-  /* height: 24px; */
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: 24px;
-  padding-right: 24px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-#label-upload-doc:hover {
-  background-color: #2d2e33;
-  text-decoration: underline;
-}
-
-.action-button {
-  border: 1px solid #44a9b7;
-  background-color: #44a9b7;
-  display: inline-block;
-  /* padding: 6px 12px; */
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: 24px;
-  padding-right: 24px;
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: pointer;
-}
-
-.action-button:hover {
-  background-color: #55b8c5;
-  text-decoration: underline;
 }
 
 .content-area {
@@ -144,36 +76,6 @@ textarea::placeholder {
   color: #999;
 } */ 
 
-.spin {
-  border: 3px solid #556177;
-  border-radius: 50%;
-  border-top: 3px solid #DEDEDE;
-  width: 20px;
-  height: 20px;
-  margin-top: 1rem;
-  -webkit-animation: spin 0.43s cubic-bezier(.7, .05, .4, .88) infinite;
-  animation: spin 0.43s cubic-bezier(.7, .05, .4, .88) infinite;
-}
-
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
 
 .flexbox-center {
   display: flex;
@@ -202,4 +104,3 @@ textarea::placeholder {
   border: none;
   outline: none;
 }
-

@@ -2,11 +2,14 @@
 
 <a href="/">← Back</a>
 
-<p>Results for: {{.Query}}</p>
+<p>Titles for: {{.Query}}</p>
 <ul>
-    {{if .Results}}
-        {{range .Results}}
+    {{if .Titles}}
+        {{range .Titles}}
             <li>{{.}}</li>
+        {{end}}
+        {{range .Posters}}
+            <img src="{{.}}" alt="">
         {{end}}
     {{else}}
         <li>No results found</li>

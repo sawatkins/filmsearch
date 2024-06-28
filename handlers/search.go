@@ -12,9 +12,10 @@ import (
 )
 
 type Movie struct {
-	Title    string   `json:"title"`
-	Year	 int	  `json:"year"`
+	Title string `json:"title"`
+	Year  int    `json:"year"`
 	// Reason   string   `json:"reason"`
+	// Poster string `json:"poster"`
 }
 
 type Movies struct {
@@ -32,32 +33,37 @@ func Search(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.Handler 
 
 		movieTitles := unmarshallMovieTitles(moviesJson)
 
-		getTmdbInfo(tmdbClient, movieTitles)
+		posters := getTmdbInfo(tmdbClient, movieTitles)
 
 		return c.Render("search", fiber.Map{
 			"Query":   query,
-			"Results": movieTitles,
+			"Titles":  movieTitles,
+			"Posters": posters,
 		}, "layouts/main")
 	}
 }
 
-func getTmdbInfo(tmdbClient *tmdb.Client, movieTitles []string) {
+func getTmdbInfo(tmdbClient *tmdb.Client, movieTitles []string) []string {
+	var posters []string
 	for _, movieTitle := range movieTitles {
 
+		// TODO: make sure this doesn't fail if bad title
 		parts := strings.Split(movieTitle, " (")
 		title := parts[0]
 		year := strings.TrimSuffix(parts[1], ")")
 
 		searchMovie, err := tmdbClient.GetSearchMovies(title, map[string]string{
-			"Primary_release_year": year,
+			"primary_release_year": year,
 		})
 		if err != nil {
 			log.Println(err)
 		}
 
-		fmt.Println(searchMovie.Results[0].Title)
-
+		// TODO: make sure that this doesn't get added, or a blank things get added if not movie match found
+		posters = append(posters, tmdb.GetImageURL(searchMovie.Results[0].PosterPath, tmdb.W92))
 	}
+	fmt.Println("posters:", posters)
+	return posters
 }
 
 func unmarshallMovieTitles(data string) []string {
