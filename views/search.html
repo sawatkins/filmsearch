@@ -3,44 +3,15 @@
 <a href="/">← Back</a>
 
 <p>Results for: {{.Query}}</p>
-<!-- <ul> -->
-    <!-- {{if .Titles}} -->
-        <!-- <li> -->
-            <!-- <div style="display: inline;">
-                {{range .Posters}}
-                    <img src="{{.}}" alt="">
-                {{end}}
-                <div>
-                    <p>{{.Title}}</p>
-                    {{range .Reasons}}
-                        <p>{{.}}</p>
-                    {{end}}
-                </div>
-            </div> -->
-            
-        <!-- </li> -->
-    <!-- {{end}} -->
 
     {{ range $index, $title := .Titles }}
         <div class="container" style="display: flex; align-items: flex-start; margin-bottom: 20px;">
             <img src="{{ index $.Posters $index }}" alt="">
             <div class="text-container" style="margin-left: 10px;">
-                <div>{{ index $.Titles $index }}</div>
+                <div style="font-weight: bold; font-size: 1.1rem; margin-bottom: 8px;">{{ index $.Titles $index }}</div>
                 <div>{{ index $.Reasons $index }}</div>
             </div>
         </div>
     {{ end }}
-
-
-<!-- 
-    <p>test</p>
-    {{if .Movies}}
-        {{range .Movies}}
-            <li>{{.Title}}</li>
-            <li>{{.Year}}</li>
-            <li>{{.Reason}}</li>
-        {{end}}
-    {{end}} -->
-<!-- </ul> -->
-
+    
 {{template "partials/footer" .}}
