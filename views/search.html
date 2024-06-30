@@ -2,18 +2,16 @@
 
 <a href="/">← Back</a>
 
-<p>Titles for: {{.Query}}</p>
-<ul>
-    {{if .Titles}}
-        {{range .Titles}}
-            <li>{{.}}</li>
-        {{end}}
-        {{range .Posters}}
-            <img src="{{.}}" alt="">
-        {{end}}
-    {{else}}
-        <li>No results found</li>
-    {{end}}
-</ul>
+<p>Results for: {{.Query}}</p>
 
+    {{ range $index, $title := .Titles }}
+        <div class="container" style="display: flex; align-items: flex-start; margin-bottom: 20px;">
+            <img src="{{ index $.Posters $index }}" alt="">
+            <div class="text-container" style="margin-left: 10px;">
+                <div style="font-weight: bold; font-size: 1.1rem; margin-bottom: 8px;">{{ index $.Titles $index }}</div>
+                <div>{{ index $.Reasons $index }}</div>
+            </div>
+        </div>
+    {{ end }}
+    
 {{template "partials/footer" .}}

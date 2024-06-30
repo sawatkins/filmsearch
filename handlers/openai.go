@@ -9,7 +9,7 @@ import (
 )
 
 const MODEL = "gpt-4o" 
-const PROMPT = "You are a movie search engine. Users will input text describing movies they are trying to find. Your job is to return the relevent movie. Respont in JSON with only the relevent movie titles and years they were released. Use the format from this example: { \"movies\": [ {  \"title\": \"Lost in Translation\", \"year\": 2003 }, {\"title\": \"Her\",\"year\": 2013}]}"
+const PROMPT = "You are search engine with very deep and extensive knowledge of movies. A user will provide text describing a movie they are trying to find. Your job is to find the user's movie based on their description. Respont in valid JSON with only the relevant movie titles, years they were released, and the short 1-2 sentece description justifying why that movie is relevant user's description. Use the format from this example: { \"movies\": [ {  \"title\": \"movie title 1\", \"year\": 2003, \"justification\": \"justification sentences for movie 1 goes here\"}, {\"title\": \"movie 2 year\",\"year\": 2013, \"justification\": \"justification sentences for movie 2 goes here\"}, ect.]}"
 
 func Openai(openaiClient *openai.Client) fiber.Handler {
 	return func(c *fiber.Ctx) error {
