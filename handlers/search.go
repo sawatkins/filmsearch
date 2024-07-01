@@ -65,10 +65,12 @@ func getTmdbInfo(tmdbClient *tmdb.Client, movieTitles []string) []string {
 			continue
 		}
 
-		// TODO: make sure that this doesn't get added, or a blank things get added if not movie match found
-		if len(searchMovie.Results) > 0 {
+		fmt.Println(searchMovie.Results[0])
+
+		if len(searchMovie.Results) > 0 || !strings.HasSuffix(searchMovie.Results[0].PosterPath, "jpg") {
 			posters = append(posters, tmdb.GetImageURL(searchMovie.Results[0].PosterPath, tmdb.W92))
 		} else {
+			posters = append(posters, "/img/no_movie_poster_found.jpg")
 			log.Println("No results found for movie:", movieTitle)
 		}
 	}
