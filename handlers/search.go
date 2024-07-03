@@ -62,16 +62,22 @@ func getTmdbInfo(tmdbClient *tmdb.Client, movieTitles []string) ([]string, []str
 			continue
 		}
 
+		if len(searchMovie.Results) == 0 {
+			log.Println("No results found for movie:", movieTitle)
+			posters = append(posters, "/img/no_movie_poster_found.jpg")
+			tmdbUrls = append(tmdbUrls, "not found")
+			continue
+		}
+
 		// get url
 		baseURL := "https://www.themoviedb.org/movie/"
 		tmdbUrls = append(tmdbUrls, fmt.Sprintf("%s%d", baseURL, searchMovie.Results[0].ID))
 
 		// get poster
-		if len(searchMovie.Results) > 0 || !strings.HasSuffix(searchMovie.Results[0].PosterPath, "jpg") {
+		if strings.HasSuffix(searchMovie.Results[0].PosterPath, "jpg") {
 			posters = append(posters, tmdb.GetImageURL(searchMovie.Results[0].PosterPath, tmdb.W92))
 		} else {
 			posters = append(posters, "/img/no_movie_poster_found.jpg")
-			log.Println("No results found for movie:", movieTitle)
 		}
 	}
 	fmt.Println("POSTERS:", posters)

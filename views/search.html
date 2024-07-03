@@ -11,11 +11,13 @@
         <div style="font-weight: bold; font-size: 1.1rem; margin-bottom: 8px;">{{ index $.Titles $index }}</div>
         <div style="margin-bottom: 4px;"><b><i>Why: </i></b>{{ index $.Reasons $index }}</div>
         <div style="font-size: 0.9rem;">
-            <a href="{{ index $.Urls $index }}" target="_blank">more info</a> /
-            <a href="{{ index $.Urls $index }}/watch" target="_blank">where to watch</a>
+            <a class="tmdb_info" href="{{ index $.Urls $index }}" target="_blank">more info</a> /
+            <a class="tmdb_info" href="{{ index $.Urls $index }}/watch" target="_blank">where to watch</a>
         </div>
     </div>
 </div>
 {{ end }}
+
+<script src="/js/search.js" async></script>
 
 {{template "partials/footer" .}}
