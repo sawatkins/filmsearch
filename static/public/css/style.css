@@ -65,14 +65,14 @@ body {
   border: 1px solid #ccc;
   background-color: #23272a;
   /* font-family: Arial, sans-serif; */
-  /* font-size: 13px;
+/* font-size: 13px;
   border-radius: 6px;
   color: #DEDEDE;
 }
 
 textarea::placeholder {
   color: #999;
-} */ 
+} */
 
 
 .flexbox-center {
@@ -101,4 +101,11 @@ textarea::placeholder {
   box-shadow: none;
   border: none;
   outline: none;
+}
+
+.example-searches {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center; 
+  gap: 30px; 
 }
