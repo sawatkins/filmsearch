@@ -27,10 +27,6 @@ div#heading {
   margin-top: 18px;
 }
 
-div#logo {
-  margin-right: 20px;
-}
-
 div#title h3 {
   margin: -5px 0 0 2px;
   font-weight: 200;
@@ -97,9 +93,7 @@ textarea::placeholder {
 
 /* Style for focus state */
 #search-input:focus {
-  border-color: inherit;
-  box-shadow: none;
-  border: none;
+  /* border: 1px solid #717274; */
   outline: none;
 }
 
