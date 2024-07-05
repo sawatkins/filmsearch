@@ -1,6 +1,14 @@
 window.onload = function () {
     console.log("loaded index.js");
     document.getElementById("search-form").addEventListener("submit", handleSearchInput);
+
+    document.querySelectorAll('.example-searches a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById("search-input").value = this.textContent;
+            handleSearchInput(event);
+        });
+    });
 }
 
 function handleSearchInput(event) {
