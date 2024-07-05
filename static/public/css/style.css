@@ -103,3 +103,29 @@ textarea::placeholder {
   justify-content: center; 
   gap: 30px; 
 }
+
+.example-searches a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.spin {
+  border: 3px solid #556177;
+  border-radius: 50%;
+  border-top: 3px solid #DEDEDE;
+  width: 20px;
+  height: 20px;
+  margin-top: 1rem;
+  -webkit-animation: spin 0.43s cubic-bezier(.7,.05,.4,.88) infinite;
+  animation: spin 0.43s cubic-bezier(.7,.05,.4,.88) infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -5,9 +5,10 @@
 </div>
 
 <div id="search-input-wrapper" class="flexbox-center">
-    <form id="search-form">
+    <form id="search-form" style="position: relative; display: inline-block;">
         <input type="text" name="search-input" id="search-input" autocomplete="off" autocapitalize="off"
-            autocorrect="off" placeholder="Search..." autofocus>
+            autocorrect="off" placeholder="Search..." autofocus style="padding-right: 30px;">
+        <span id="spinner" class="spin" style="display: none; position: absolute; right: -30px; top: -8%; transform: translateY(-50%);"></span>
         <input type="submit" style="display: none;">
     </form>
 </div>
@@ -17,13 +18,13 @@
 <div style="text-align: center; line-height: 1.9rem;">
     <div style="font-weight: bold; font-size: 1.1rem;">Example searches</div>
     <div class="example-searches">
-        <a href="">red dog</a>
-        <a href="">second search</a>
-        <a href="">jamacian bobslead team</a>
+        <a>red dog</a>
+        <a>second search</a>
+        <a>jamacian bobslead team</a>
     </div>
     <div class="example-searches">
-        <a href="">fourth search</a>
-        <a href="">fifth search</a>
+        <a>fourth search</a>
+        <a>fifth search</a>
     </div>
 </div>
 
