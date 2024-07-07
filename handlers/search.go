@@ -24,7 +24,13 @@ type Movies struct {
 func Search(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		query := c.Query("q")
-	
+
+		if query == "" {
+			return c.Render("404", fiber.Map{
+				"Message": "No query provided",
+			}, "layouts/main")
+		}
+
 		return c.Render("search", fiber.Map{
 			"Query":   query,
 		}, "layouts/main")
@@ -74,7 +80,7 @@ func getTmdbInfo(tmdbClient *tmdb.Client, movieTitles []string) ([]string, []str
 		if len(searchMovie.Results) == 0 {
 			log.Println("No results found for movie:", movieTitle)
 			posters = append(posters, "/img/no_movie_poster_found.jpg")
-			tmdbUrls = append(tmdbUrls, "not found")
+			tmdbUrls = append(tmdbUrls, "notfound")
 			continue
 		}
 
