@@ -8,6 +8,19 @@
     <div class="spin"></div>
 </div>
 
-<script src="https://unpkg.com/htmx.org@2.0.0" integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/htmx.org@2.0.0"
+    integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
+    crossorigin="anonymous"></script>
+
+<script>
+    document.addEventListener('htmx:afterOnLoad', function (event) {
+        document.querySelectorAll(".tmdb_info").forEach(element => {
+            if (element.href.includes("notfound")) {
+                element.textContent = "no external info found";
+                element.removeAttribute("href");
+            }
+        });
+    });
+</script>
 
 {{template "partials/footer" .}}
