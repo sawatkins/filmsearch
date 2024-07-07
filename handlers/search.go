@@ -6,8 +6,8 @@ import (
 	"log"
 	"strings"
 
-	tmdb "github.com/cyruzin/golang-tmdb"
 	"github.com/gofiber/fiber/v2"
+	tmdb "github.com/cyruzin/golang-tmdb"
 	openai "github.com/sashabaranov/go-openai"
 )
 
@@ -24,6 +24,16 @@ type Movies struct {
 func Search(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		query := c.Query("q")
+	
+		return c.Render("search", fiber.Map{
+			"Query":   query,
+		}, "layouts/main")
+	}
+}
+
+func SearchResults(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		query := c.Query("q")
 		moviesJson, err := openaiMovieCompletion(openaiClient, query)
 		if err != nil {
 			fmt.Println(err)
@@ -33,13 +43,13 @@ func Search(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.Handler 
 		movieTitles, movieReasons := unmarshallMovieTitles(moviesJson)
 		posters, tmdbUrls := getTmdbInfo(tmdbClient, movieTitles)
 
-		return c.Render("search", fiber.Map{
-			"Query":   query,
+		// return c.SendString("<p>Results for: " + query + "</p>")
+		return c.Render("search-results", fiber.Map{
 			"Titles":  movieTitles,
 			"Posters": posters,
 			"Reasons": movieReasons,
 			"Urls":    tmdbUrls,
-		}, "layouts/main")
+		})
 	}
 }
 

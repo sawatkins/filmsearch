@@ -1,14 +1,4 @@
-{{template "partials/navbar" .}}
-
-<a href="/">← Back</a>
-
-<p>Results for: {{.Query}}</p>
-
-<div hx-get="/search-results?q={{.Query}}" hx-trigger="load" hx-target="this">
-    <div class="spin"></div>
-</div>
-
-<!-- {{ range $index, $title := .Titles }}
+{{ range $index, $title := .Titles }}
 <div class="container" style="display: flex; align-items: flex-start; margin-bottom: 20px;">
     <img src="{{ index $.Posters $index }}" alt="">
     <div class="text-container" style="margin-left: 10px;">
@@ -20,10 +10,4 @@
         </div>
     </div>
 </div>
-{{ end }} -->
-
-<!-- <script src="/js/search.js" async></script> --> 
-<!-- when to run this?^ -->
-<script src="https://unpkg.com/htmx.org@2.0.0" integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw" crossorigin="anonymous"></script>
-
-{{template "partials/footer" .}}
+{{ end }}
