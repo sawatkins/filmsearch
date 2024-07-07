@@ -49,8 +49,8 @@ func main() {
 
 	app.Get("/", handlers.Index)
 	app.Get("/search", handlers.Search(openaiClient, tmdbClient))
-	app.Get("/about", handlers.About)
 	app.Get("/search-results", handlers.SearchResults(openaiClient, tmdbClient))
+	app.Get("/about", handlers.About)
 	app.Use(handlers.NotFound)
 
 	log.Println("Server starting on port", *port)

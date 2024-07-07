@@ -43,7 +43,6 @@ func SearchResults(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.H
 		movieTitles, movieReasons := unmarshallMovieTitles(moviesJson)
 		posters, tmdbUrls := getTmdbInfo(tmdbClient, movieTitles)
 
-		// return c.SendString("<p>Results for: " + query + "</p>")
 		return c.Render("search-results", fiber.Map{
 			"Titles":  movieTitles,
 			"Posters": posters,
@@ -90,8 +89,8 @@ func getTmdbInfo(tmdbClient *tmdb.Client, movieTitles []string) ([]string, []str
 			posters = append(posters, "/img/no_movie_poster_found.jpg")
 		}
 	}
-	fmt.Println("POSTERS:", posters)
-	fmt.Println("URLS:", tmdbUrls)
+	// fmt.Println("POSTERS:", posters)
+	// fmt.Println("URLS:", tmdbUrls)
 	return posters, tmdbUrls
 }
 
@@ -113,7 +112,7 @@ func unmarshallMovieTitles(data string) ([]string, []string) {
 		movieReasons = append(movieReasons, movie.Reason)
 	}
 	
-	fmt.Println("TITLES:", movieTitles)
-	fmt.Println("REASONS:", movieReasons)
+	// fmt.Println("TITLES:", movieTitles)
+	// fmt.Println("REASONS:", movieReasons)
 	return movieTitles, movieReasons
 }
