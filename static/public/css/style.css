@@ -36,8 +36,8 @@ body {
   /* #374151; */
   color: #DEDEDE;
   line-height: 1.4em;
-  width: 45%;
-  min-width: 750px;
+  width: 45%; 
+  min-width: 750px; 
   margin: 15px auto;
   padding: 0 15px;
   font-family: "Play", sans-serif;
@@ -109,4 +109,29 @@ body {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  #search-input {
+    max-width: 340px; 
+  }
+
+  .example-searches {
+    flex-direction: column; 
+    gap: 10px; 
+  }
+
+  .flexbox-center {
+    flex-direction: column; 
+    gap: 5px; 
+  }
+
+  .flexbox-center h2 {
+    text-align: center;
+  }
+
+  body {
+    width: 90%; 
+    min-width: 350px; 
+  }
 }
