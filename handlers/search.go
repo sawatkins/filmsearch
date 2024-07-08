@@ -41,9 +41,11 @@ func SearchResults(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.H
 	return func(c *fiber.Ctx) error {
 		query := c.Query("q")
 		moviesJson, err := openaiMovieCompletion(openaiClient, query)
-		if err != nil {
-			fmt.Println(err)
-			return c.SendStatus(500) // maybe this should just dirent to a "try again later page"
+		if err != nil || moviesJson == "" {
+			log.Println(err)
+			return c.Render("404", fiber.Map{
+				"Message": "No results for query: " + query,
+			}, "layouts/main")
 		}
 
 		movieTitles, movieReasons := unmarshallMovieTitles(moviesJson)
@@ -104,7 +106,7 @@ func unmarshallMovieTitles(data string) ([]string, []string) {
 	var movies Movies
 	err := json.Unmarshal([]byte(data), &movies)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return nil, nil // is this the best way to handle errors here?
 	}
 
