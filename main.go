@@ -45,7 +45,7 @@ func main() {
 
 	app.Use(recover.New())
 	app.Use(logger.New())
-	app.Static("/", "./static/public")
+	app.Static("/", "./static")
 
 	app.Get("/", handlers.Index)
 	app.Get("/search", handlers.Search(openaiClient, tmdbClient))
