@@ -1,6 +1,7 @@
 {{template "partials/navbar" .}}
 
 <div class="flexbox-center">
+    <img src="/img/magnifying-glass-icon.svg" alt="" width="25px" height="25px">
     <h2>Discover movies using natural language</h2>
 </div>
 
@@ -8,6 +9,10 @@
     <form id="search-form" style="position: relative; display: inline-block;">
         <input type="text" name="search-input" id="search-input" autocomplete="off" autocapitalize="off"
             autocorrect="off" placeholder="Search..." autofocus style="padding-right: 30px;">
+        <button type="submit"
+            style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+            <img src="/img/arrow-sm-right.svg" alt="" width="21px" height="21px" style="vertical-align: middle; margin-top: 1px;">
+        </button>
         <input type="submit" style="display: none;">
     </form>
 </div>
@@ -19,11 +24,13 @@
     <div class="example-searches">
         <a href="/search?q=top+action+movies+from+2004">top action movies from 2004</a>
         <a href="/search?q=lonely+programmers">lonely programmers</a>
-        <a href="/search?q=jamacian+bobslead+team">jamacian bobslead team</a>
     </div>
     <div class="example-searches">
         <a href="/search?q=vietnam+war+movies">vietnam war movies</a>
-        <a href="/search?q=movies+with+the+actor+that+played+walt+in+breaking+bad">movies with the actor that played walt in breaking bad</a>
+        <a href="/search?q=jamacian+bobslead+team">jamacian bobslead team</a>
+        <!-- 
+        <a href="/search?q=movies+with+the+actor+that+played+walt+in+breaking+bad">movies with the actor that played
+            walt in breaking bad</a> -->
     </div>
 </div>
 
