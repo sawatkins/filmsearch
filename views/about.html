@@ -1,11 +1,39 @@
 {{template "partials/navbar" .}}
 <!-- <h2 class="content-area">❓ Frequently Asked Questions</i></h2> -->
-    <p>About</p>
+<strong>About</strong>
+<div class="content-area">
+    <p>Welcome! FilmSearch is a AI search engine to discover movies using natural language. I created it to simplify
+        movie
+        discovery, uncover hidden gems, and find films matching specific moods or interests.</p>
+    <p>It uses OpenAI's GPT-4o model to understand natural language queries and find the most relevant movies.
+        Then it uses the TMDB API to get movie posters.</p>
+</div>
 
-    <p>Keyword tags are from <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">The Movie
-            Database.</a><br>
-        I'm also required to say that: "This product uses the TMDB API but is not endorsed or certified by TMDB."</p>
-    <a href="https://www.themoviedb.org/" target="_blank" rel="noopener"><img src="/img/tmdb.svg"
-            alt="the movie databse logo" width="100px"></a>
+<strong>Contact & Feedback</strong>
+<div class="content-area">
+    <p>For feedback, suggestions, or other questions, feel free to <a href="mailto:">email me</a>.</p>
+</div>
+
+<strong>Privacy</strong>
+<div class="content-area">
+    <p>I don't collect personal information, store cookies, or use tracking. I log search queries to understand and
+        improve the results (and beacuse I'm curious what people search for).</p>
+    <p>Keep in mind that search queries get sent to OpenAI's API for processing, so refer to their <a
+            href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noopener">privacy policy</a>.</p>
+</div>
+
+<strong>Attribution:</strong>
+<div class="content-area">
+    <p>Icons:<br>
+        Author: <a href="https://www.svgrepo.com/author/pixelbazaar/" target="_blank" rel="noopener">pixelbazaar</a><br>
+        License: <a href="https://www.svgrepo.com/page/licensing/#CC%20Attribution" target="_blank" rel="noopener"> CC
+            Attribution License</a> (No changes were made)</p>
+    <p>Movie posters:<br>
+        <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">The Movie Database</a><br>
+        (This product uses the TMDB API but is not endorsed or certified by TMDB)
+    </p>
+    <a href="https://www.themoviedb.org/" target="_blank" rel="noopener"><img src="/img/tmdb.svg" alt=""
+            width="100px"></a>
+</div>
 
 {{template "partials/footer" .}}

@@ -4,14 +4,23 @@
 
 <p>Results for: {{.Query}}</p>
 
-    {{ range $index, $title := .Titles }}
-        <div class="container" style="display: flex; align-items: flex-start; margin-bottom: 20px;">
-            <img src="{{ index $.Posters $index }}" alt="">
-            <div class="text-container" style="margin-left: 10px;">
-                <div style="font-weight: bold; font-size: 1.1rem; margin-bottom: 8px;">{{ index $.Titles $index }}</div>
-                <div>{{ index $.Reasons $index }}</div>
-            </div>
-        </div>
-    {{ end }}
-    
+<div hx-get="/search-results?q={{.Query}}" hx-trigger="load" hx-target="this">
+    <div class="spin"></div>
+</div>
+
+<script src="https://unpkg.com/htmx.org@2.0.0"
+    integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
+    crossorigin="anonymous"></script>
+
+<script>
+    document.addEventListener('htmx:afterOnLoad', function (event) {
+        document.querySelectorAll(".tmdb_info").forEach(element => {
+            if (element.href.includes("notfound")) {
+                element.textContent = "no external info found";
+                element.removeAttribute("href");
+            }
+        });
+    });
+</script>
+
 {{template "partials/footer" .}}
