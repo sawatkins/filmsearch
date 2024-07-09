@@ -10,10 +10,10 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/template/html/v2"
 	"github.com/joho/godotenv"
-	openai "github.com/sashabaranov/go-openai"
 	tmdb "github.com/cyruzin/golang-tmdb"
+	openai "github.com/sashabaranov/go-openai"
 
-	"github.com/sawatkins/eureka-search/handlers"
+	"github.com/sawatkins/filmsearch/handlers"
 )
 
 func loadEnv() {
