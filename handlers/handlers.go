@@ -12,13 +12,20 @@ func NotFound(c *fiber.Ctx) error {
 
 func Index(c *fiber.Ctx) error {
 	return c.Render("index", fiber.Map{
-		"Title": "Hello, Index!",
+		"Title":       "FilmSearch",
+		"Canonical":   "https://filmsearch.xyz",
+		"Robots":      "index, follow",
+		"Description": "AI search engine to discover movies using natural language",
+		"Keywords":    "filmsearch, film, search, movie, discover, ai",
 	}, "layouts/main")
 }
 
 func About(c *fiber.Ctx) error {
 	return c.Render("about", fiber.Map{
-		"Title": "Hello, About!",
+		"Title":       "FilmSearch - About",
+		"Canonical":   "https://filmsearch.xyz/about",
+		"Robots":      "index, follow",
+		"Description": "About FilmSearch",
+		"Keywords":    "filmsearch, about, film, search, movie, discover, ai",
 	}, "layouts/main")
 }
-

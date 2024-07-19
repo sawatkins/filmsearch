@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-    <title>FilmSearch</title>
+    <title>{{ .Title }}</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta name="description" content="AI search engine to discover movies using natural language" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{{ .Description }}" />
     <meta name="author" content="sawatkins" />
-    <meta name="keywords" content="films, movies, search, discover, ai" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow">
-    <!-- <link rel="canonical" href="https://filmsearch.xyz" /> -->
+    <meta name="keywords" content="{{ .Keywords }}" />
+    <meta name="robots" content="{{ .Robots }}" />
+    <link rel="canonical" href="{{ .Canonical }}" />
     <!-- css  -->
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <!-- google fonts -->

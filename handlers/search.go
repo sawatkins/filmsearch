@@ -6,8 +6,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/gofiber/fiber/v2"
 	tmdb "github.com/cyruzin/golang-tmdb"
+	"github.com/gofiber/fiber/v2"
 	openai "github.com/sashabaranov/go-openai"
 )
 
@@ -32,7 +32,12 @@ func Search(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.Handler 
 		}
 
 		return c.Render("search", fiber.Map{
-			"Query":   query,
+			"Title":       "FilmSearch - Search",
+			"Canonical":   "https://filmsearch.xyz/search",
+			"Robots":      "noindex, nofollow",
+			"Description": "Results for: " + query,
+			"Keywords":    "filmsearch, search, film, movie, discover, ai",
+			"Query":       query,
 		}, "layouts/main")
 	}
 }
@@ -119,7 +124,7 @@ func unmarshallMovieTitles(data string) ([]string, []string) {
 	for _, movie := range movies.Movies {
 		movieReasons = append(movieReasons, movie.Reason)
 	}
-	
+
 	// fmt.Println("TITLES:", movieTitles)
 	// fmt.Println("REASONS:", movieReasons)
 	return movieTitles, movieReasons
