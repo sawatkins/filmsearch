@@ -16,19 +16,15 @@ import (
 	"github.com/sawatkins/filmsearch/handlers"
 )
 
-func loadEnv() {
-	if err := godotenv.Load(); err != nil {
-		log.Println("Error loading .env file!")
-	}
-}
-
 func main() {
 	port := flag.String("port", ":8080", "Port to listen on")
 	prefork := flag.Bool("prefork", false, "Enable prefork in Production")
 	dev := flag.Bool("dev", true, "Enable development mode")
 	flag.Parse()
 
-	loadEnv()
+	if err := godotenv.Load(); err != nil {
+		log.Println("Did not load .env file")
+	}
 	openaiClient := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
 	tmdbClient, _ := tmdb.Init(os.Getenv("TMDB_API_KEY"))
 
