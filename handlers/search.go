@@ -46,7 +46,13 @@ func Search(s3Client *s3.Client) fiber.Handler {
 		go logQuery(c, s3Client)
 
 		return c.Render("search", fiber.Map{
-			"Query": query,
+			"Title":       "FilmSearch - Search",
+			"Canonical":   "https://filmsearch.xyz/search",
+			"Robots":      "noindex, nofollow",
+			"Description": "Results for: " + query,
+			"Keywords":    "filmsearch, search, film, movie, discover, ai",
+			"Query":       query,
+
 		}, "layouts/main")
 	}
 }
@@ -64,6 +70,14 @@ func SearchResults(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.H
 
 		movieTitles, movieReasons := unmarshallMovieTitles(moviesJson)
 		posters, tmdbUrls := getTmdbInfo(tmdbClient, movieTitles)
+
+		// make sure all slices have the same length
+		if !(len(movieTitles) == len(posters) && len(posters) == len(movieReasons) && len(movieReasons) == len(tmdbUrls)) {
+			log.Println("Data length mismatch")
+			return c.Render("404", fiber.Map{
+				"Message": "Data length mismatch",
+			}, "layouts/main")
+		}
 
 		return c.Render("search-results", fiber.Map{
 			"Titles":  movieTitles,
@@ -121,7 +135,7 @@ func unmarshallMovieTitles(data string) ([]string, []string) {
 	err := json.Unmarshal([]byte(data), &movies)
 	if err != nil {
 		log.Println(err)
-		return nil, nil // is this the best way to handle errors here?
+		return nil, nil
 	}
 
 	var movieTitles []string

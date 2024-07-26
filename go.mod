@@ -1,4 +1,4 @@
-module github.com/sawatkins/eureka-search
+module github.com/sawatkins/filmsearch
 
 go 1.21
 

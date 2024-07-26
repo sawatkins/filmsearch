@@ -16,14 +16,8 @@ import (
 	"github.com/joho/godotenv"
 	openai "github.com/sashabaranov/go-openai"
 
-	"github.com/sawatkins/eureka-search/handlers"
+	"github.com/sawatkins/filmsearch/handlers"
 )
-
-func loadEnv() {
-	if err := godotenv.Load(); err != nil {
-		log.Println("Error loading .env file!")
-	}
-}
 
 func main() {
 	port := flag.String("port", ":8080", "Port to listen on")
@@ -31,7 +25,9 @@ func main() {
 	dev := flag.Bool("dev", true, "Enable development mode")
 	flag.Parse()
 
-	loadEnv()
+	if err := godotenv.Load(); err != nil {
+		log.Println("Did not load .env file")
+	}
 	openaiClient := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
 	tmdbClient, _ := tmdb.Init(os.Getenv("TMDB_API_KEY"))
 
