@@ -15,14 +15,14 @@ func Index(c *fiber.Ctx) error {
 		"Title":       "FilmSearch",
 		"Canonical":   "https://filmsearch.xyz",
 		"Robots":      "index, follow",
-		"Description": "AI search engine to discover movies using natural language",
+		"Description": "FilmSearch is an AI-assisted tool to discover movies using natural language",
 		"Keywords":    "filmsearch, film, search, movie, discover, ai",
 	}, "layouts/main")
 }
 
 func About(c *fiber.Ctx) error {
 	return c.Render("about", fiber.Map{
-		"Title":       "FilmSearch - About",
+		"Title":       "About - FilmSearch",
 		"Canonical":   "https://filmsearch.xyz/about",
 		"Robots":      "index, follow",
 		"Description": "About FilmSearch",
