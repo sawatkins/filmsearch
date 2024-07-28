@@ -43,7 +43,13 @@ func Search(s3Client *s3.Client) fiber.Handler {
 			}, "layouts/main")
 		}
 
-		go logQuery(c, s3Client)
+		logData := LogQuery{
+			Query:     query,
+			Ip:        c.IP(),
+			Time:      time.Now().Format(time.RFC3339),
+			UserAgent: string(c.Request().Header.Peek("User-Agent")),
+		}
+		go logQuery(logData, s3Client)
 
 		return c.Render("search", fiber.Map{
 			"Title":       "FilmSearch - Search",
@@ -154,14 +160,9 @@ func unmarshallMovieTitles(data string) ([]string, []string) {
 }
 
 // log query to aws s3
-func logQuery(c *fiber.Ctx, s3Client *s3.Client) {
-	query := LogQuery{
-		Query:     c.Query("q"),
-		Ip:        c.IP(),
-		Time:      time.Now().Format(time.RFC3339),
-		UserAgent: string(c.Request().Header.Peek("User-Agent")),
-	}
-	csvLine := fmt.Sprintf("%s,%s,%s,%s\n", query.Query, query.Ip, query.Time, query.UserAgent)
+func logQuery(logData LogQuery, s3Client *s3.Client) {
+
+	csvLine := fmt.Sprintf("%s,%s,%s,%s\n", logData.Query, logData.Ip, logData.Time, logData.UserAgent)
 
 	getObjectOutput, err := s3Client.GetObject(context.TODO(), &s3.GetObjectInput{
 		Bucket: aws.String("filmsearch-query-log-654tizo86wufmowm8o34btuna4gukusw1b-s3alias"),
@@ -193,6 +194,6 @@ func logQuery(c *fiber.Ctx, s3Client *s3.Client) {
 	if err != nil {
 		log.Printf("Error appending query to S3: %v", err)
 	} else {
-		log.Println("Logged query to S3")
+		log.Println("Logged query to S3: " + logData.Query)
 	}
 }

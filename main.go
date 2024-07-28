@@ -33,7 +33,7 @@ func main() {
 
 	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion("us-west-1"))
 	if err != nil {
-		log.Printf("Failed to load AWS configuration, %v", err)
+		log.Fatalf("Failed to load AWS configuration, %v", err)
 	}
 	s3Client := s3.NewFromConfig(cfg)
 

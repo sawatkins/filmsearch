@@ -4,3 +4,4 @@ package.json
 bun.lockb
 .env
 .DS_Store
+main
