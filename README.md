@@ -1,9 +1,8 @@
 # FilmSearch 
 
 
-FilmSearch is an AI-assisted tool to discover movies using natural language. https://filmsearch.xyz
+FilmSearch is an AI-assisted web app to discover movies using natural language. https://filmsearch.xyz
 
-It uses GPT-4o to understand natural language queries and find the most relevant movies and The Movie Database API to get movie poster images.
+It uses GPT-4o to understand natural language queries and find the most relevant movies. Movie poster images are fetched from The Movie Database's API.
 
-Uses Go for the backend uses AWS for hosting and s3.
-
+It uses Go for the backend and uses AWS S3. 
