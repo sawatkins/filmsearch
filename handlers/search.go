@@ -45,7 +45,7 @@ func Search(s3Client *s3.Client) fiber.Handler {
 
 		logData := LogQuery{
 			Query:     query,
-			Ip:        c.IP(),
+			Ip:        c.Context().RemoteIP().String(),
 			Time:      time.Now().Format(time.RFC3339),
 			UserAgent: string(c.Request().Header.Peek("User-Agent")),
 		}
@@ -69,16 +69,14 @@ func SearchResults(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.H
 		moviesJson, err := openaiMovieCompletion(openaiClient, query)
 		if err != nil || moviesJson == "" {
 			log.Println(err)
-			return c.Render("404", fiber.Map{
-				"Message": "No results for query: " + query,
-			}, "layouts/main")
+			return c.SendString("<div>No results found.</div>")
 		}
 
 		movieTitles, movieReasons := unmarshallMovieTitles(moviesJson)
 		posters, tmdbUrls := getTmdbInfo(tmdbClient, movieTitles)
 
 		// make sure all slices have the same length
-		if !(len(movieTitles) == len(posters) && len(posters) == len(movieReasons) && len(movieReasons) == len(tmdbUrls)) {
+		if !(len(movieTitles) == len(posters) && len(posters) == len(movieReasons) && len(movieReasons) == len(tmdbUrls)) { // make this shorter
 			log.Println("Data length mismatch")
 			return c.Render("404", fiber.Map{
 				"Message": "Data length mismatch",
