@@ -85,7 +85,8 @@ body {
   gap: 30px; 
 }
 
-.example-searches a {
+.example-search {
+  color: #9eb6dd;
   text-decoration: underline;
   cursor: pointer;
 }
