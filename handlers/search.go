@@ -58,7 +58,6 @@ func Search(s3Client *s3.Client) fiber.Handler {
 			"Description": "Results for: " + query,
 			"Keywords":    "filmsearch, search, film, movie, discover, ai",
 			"Query":       query,
-
 		}, "layouts/main")
 	}
 }
@@ -66,29 +65,55 @@ func Search(s3Client *s3.Client) fiber.Handler {
 func SearchResults(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		query := c.Query("q")
-		moviesJson, err := openaiMovieCompletion(openaiClient, query)
-		if err != nil || moviesJson == "" {
-			log.Println(err)
-			return c.SendString("<div>No results found.</div>")
+
+		type result struct {
+			titles  []string
+			reasons []string
+			posters []string
+			urls    []string
+			err     error
 		}
 
-		movieTitles, movieReasons := unmarshallMovieTitles(moviesJson)
-		posters, tmdbUrls := getTmdbInfo(tmdbClient, movieTitles)
+		resultChan := make(chan result)
 
-		// make sure all slices have the same length
-		if !(len(movieTitles) == len(posters) && len(posters) == len(movieReasons) && len(movieReasons) == len(tmdbUrls)) { // make this shorter
-			log.Println("Data length mismatch")
-			return c.Render("404", fiber.Map{
-				"Message": "Data length mismatch",
-			}, "layouts/main")
+		go func() {
+			moviesJson, err := openaiMovieCompletion(openaiClient, query)
+			if err != nil || moviesJson == "" {
+				resultChan <- result{err: fmt.Errorf("error getting movie completion: %v", err)}
+				return
+			}
+
+			movieTitles, movieReasons := unmarshallMovieTitles(moviesJson)
+			posters, tmdbUrls := getTmdbInfo(tmdbClient, movieTitles)
+
+			if !(len(movieTitles) == len(posters) && len(posters) == len(movieReasons) && len(movieReasons) == len(tmdbUrls)) {
+				resultChan <- result{err: fmt.Errorf("data length mismatch")}
+				return
+			}
+
+			resultChan <- result{
+				titles:  movieTitles,
+				reasons: movieReasons,
+				posters: posters,
+				urls:    tmdbUrls,
+			}
+		}()
+
+		select {
+		case res := <-resultChan:
+			if res.err != nil {
+				log.Printf("Error processing search results: %v", res.err)
+				return c.SendString("<div>Sorry, an error occurred. No results found.</div>")
+			}
+			return c.Render("search-results", fiber.Map{
+				"Titles":  res.titles,
+				"Posters": res.posters,
+				"Reasons": res.reasons,
+				"Urls":    res.urls,
+			})
+		case <-time.After(10 * time.Second):
+			return c.SendString("<div>Sorry, request timed out. No results found.</div>")
 		}
-
-		return c.Render("search-results", fiber.Map{
-			"Titles":  movieTitles,
-			"Posters": posters,
-			"Reasons": movieReasons,
-			"Urls":    tmdbUrls,
-		})
 	}
 }
 
