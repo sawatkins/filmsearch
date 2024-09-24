@@ -16,6 +16,7 @@ const PROMPT = `You are search engine with very deep and extensive knowledge of 
 	{ "movies": [ {  "title": "movie title 1", "year": 0000, "justification": "justification sentences for movie 1 goes here"}, 
 	{"title": "movie 2 year","year": 0000, "justification": "justification sentences for movie 2 goes here"}, ect...]}`
 
+// openaiMovieCompletion makes the call to the OpenAI API to get a list of matching movies
 func openaiMovieCompletion(openaiClient *openai.Client, query string) (string, error) {
 	request := openai.ChatCompletionRequest{
 		Model: MODEL,

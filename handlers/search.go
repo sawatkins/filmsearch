@@ -33,6 +33,7 @@ type LogQuery struct {
 	UserAgent string `json:"user_agent"`
 }
 
+// Search handles the initial search request and renders the search page
 func Search(s3Client *s3.Client) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		query := c.Query("q")
@@ -45,9 +46,7 @@ func Search(s3Client *s3.Client) fiber.Handler {
 
 		logData := LogQuery{
 			Query:     query,
-			Ip:        c.Context().RemoteIP().String(),
 			Time:      time.Now().Format(time.RFC3339),
-			UserAgent: string(c.Request().Header.Peek("User-Agent")),
 		}
 		go logQuery(logData, s3Client)
 
@@ -62,6 +61,7 @@ func Search(s3Client *s3.Client) fiber.Handler {
 	}
 }
 
+// SearchResults handles the search request and returns the results with a timeout
 func SearchResults(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		query := c.Query("q")
@@ -117,9 +117,11 @@ func SearchResults(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.H
 	}
 }
 
+// getTmdbInfo gets the poster and tmdb url for each movie title
 func getTmdbInfo(tmdbClient *tmdb.Client, movieTitles []string) ([]string, []string) {
 	var posters []string
 	var tmdbUrls []string
+
 	for _, movieTitle := range movieTitles {
 		parts := strings.Split(movieTitle, " (")
 		if len(parts) < 2 {
@@ -159,6 +161,7 @@ func getTmdbInfo(tmdbClient *tmdb.Client, movieTitles []string) ([]string, []str
 	return posters, tmdbUrls
 }
 
+// unmarshallMovieTitles unmarshalls the movie titles and reasons from the json
 func unmarshallMovieTitles(data string) ([]string, []string) {
 	var movies Movies
 	err := json.Unmarshal([]byte(data), &movies)
@@ -182,10 +185,10 @@ func unmarshallMovieTitles(data string) ([]string, []string) {
 	return movieTitles, movieReasons
 }
 
-// log query to aws s3
+// logQuery logs the query to the s3 bucket
 func logQuery(logData LogQuery, s3Client *s3.Client) {
-
-	csvLine := fmt.Sprintf("%s,%s,%s,%s\n", logData.Query, logData.Ip, logData.Time, logData.UserAgent)
+	// TODO: better logging
+	csvLine := fmt.Sprintf("%s,%s\n", logData.Query, logData.Time)
 
 	getObjectOutput, err := s3Client.GetObject(context.TODO(), &s3.GetObjectInput{
 		Bucket: aws.String("filmsearch-query-log-654tizo86wufmowm8o34btuna4gukusw1b-s3alias"),
