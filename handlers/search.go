@@ -111,7 +111,7 @@ func SearchResults(openaiClient *openai.Client, tmdbClient *tmdb.Client) fiber.H
 				"Reasons": res.reasons,
 				"Urls":    res.urls,
 			})
-		case <-time.After(10 * time.Second):
+		case <-time.After(15 * time.Second):
 			return c.SendString("<div>Sorry, request timed out. No results found.</div>")
 		}
 	}

@@ -4,6 +4,7 @@
 <p>Results for: {{.Query}}</p>
 
 <div hx-get="/search-results?q={{.Query}}" hx-trigger="load" hx-target="this">
+    <p>This can take up to 15 sec. Please wait!</p>
     <div class="spin"></div>
 </div>
 

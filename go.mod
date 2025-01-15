@@ -3,13 +3,13 @@ module github.com/sawatkins/filmsearch
 go 1.21
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.5
-	github.com/gofiber/template/html/v2 v2.1.2
+	github.com/gofiber/fiber/v2 v2.52.6
+	github.com/gofiber/template/html/v2 v2.1.3
 )
 
 require (
 	github.com/cyruzin/golang-tmdb v1.6.5
-	github.com/sashabaranov/go-openai v1.27.0
+	github.com/sashabaranov/go-openai v1.36.1
 )
 
 require (
@@ -51,5 +51,5 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.55.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	golang.org/x/sys v0.22.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
 )
