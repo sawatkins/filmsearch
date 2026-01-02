@@ -186,40 +186,40 @@ func unmarshallMovieTitles(data string) ([]string, []string) {
 }
 
 // logQuery logs the query to the s3 bucket
-func logQuery(logData LogQuery, s3Client *s3.Client) {
-	// TODO: log to an actual db
-	csvLine := fmt.Sprintf("%s,%s\n", logData.Query, logData.Time)
-
-	getObjectOutput, err := s3Client.GetObject(context.TODO(), &s3.GetObjectInput{
-		Bucket: aws.String("filmsearch-query-log-654tizo86wufmowm8o34btuna4gukusw1b-s3alias"),
-		Key:    aws.String("queries.csv"),
-	})
-	if err != nil {
-		log.Printf("Error getting existing CSV from S3: %v", err)
-	}
-
-	var existingContent string
-	if getObjectOutput.Body != nil {
-		content, err := io.ReadAll(getObjectOutput.Body)
-		if err != nil {
-			log.Printf("Error reading existing CSV content: %v", err)
-		} else {
-			existingContent = string(content)
-		}
-		getObjectOutput.Body.Close()
-	}
-
-	newContent := existingContent + csvLine
-
-	_, err = s3Client.PutObject(context.TODO(), &s3.PutObjectInput{
-		Bucket:      aws.String("filmsearch-query-log-654tizo86wufmowm8o34btuna4gukusw1b-s3alias"),
-		Key:         aws.String("queries.csv"),
-		Body:        strings.NewReader(newContent),
-		ContentType: aws.String("text/csv"),
-	})
-	if err != nil {
-		log.Printf("Error appending query to S3: %v", err)
-	} else {
-		log.Println("Logged query to S3: " + logData.Query)
-	}
-}
+//func logQuery(logData LogQuery, s3Client *s3.Client) {
+//	// TODO: log to an actual db
+//	csvLine := fmt.Sprintf("%s,%s\n", logData.Query, logData.Time)
+//
+//	getObjectOutput, err := s3Client.GetObject(context.TODO(), &s3.GetObjectInput{
+//		Bucket: aws.String("filmsearch-query-log-654tizo86wufmowm8o34btuna4gukusw1b-s3alias"),
+//		Key:    aws.String("queries.csv"),
+//	})
+//	if err != nil {
+//		log.Printf("Error getting existing CSV from S3: %v", err)
+//	}
+//
+//	var existingContent string
+//	if getObjectOutput.Body != nil {
+//		content, err := io.ReadAll(getObjectOutput.Body)
+//		if err != nil {
+//			log.Printf("Error reading existing CSV content: %v", err)
+//		} else {
+//			existingContent = string(content)
+//		}
+//		getObjectOutput.Body.Close()
+//	}
+//
+//	newContent := existingContent + csvLine
+//
+//	_, err = s3Client.PutObject(context.TODO(), &s3.PutObjectInput{
+//		Bucket:      aws.String("filmsearch-query-log-654tizo86wufmowm8o34btuna4gukusw1b-s3alias"),
+//		Key:         aws.String("queries.csv"),
+//		Body:        strings.NewReader(newContent),
+//		ContentType: aws.String("text/csv"),
+//	})
+//	if err != nil {
+//		log.Printf("Error appending query to S3: %v", err)
+//	} else {
+//		log.Println("Logged query to S3: " + logData.Query)
+//	}
+//}
