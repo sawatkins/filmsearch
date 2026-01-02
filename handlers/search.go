@@ -1,16 +1,12 @@
 package handlers
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"strings"
 	"time"
 
-	"github.com/aws/aws-sdk-go-v2/service/s3"
-	"github.com/aws/aws-sdk-go/aws"
 	tmdb "github.com/cyruzin/golang-tmdb"
 	"github.com/gofiber/fiber/v2"
 	openai "github.com/sashabaranov/go-openai"
@@ -26,15 +22,15 @@ type Movies struct {
 	Movies []Movie `json:"movies"`
 }
 
-type LogQuery struct {
-	Query     string `json:"query"`
-	Ip        string `json:"ip"`
-	Time      string `json:"time"`
-	UserAgent string `json:"user_agent"`
-}
+//type LogQuery struct {
+//	Query     string `json:"query"`
+//	Ip        string `json:"ip"`
+//	Time      string `json:"time"`
+//	UserAgent string `json:"user_agent"`
+//}
 
 // Search handles the initial search request and renders the search page
-func Search(s3Client *s3.Client) fiber.Handler {
+func Search() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		query := c.Query("q")
 
@@ -44,10 +40,11 @@ func Search(s3Client *s3.Client) fiber.Handler {
 			}, "layouts/main")
 		}
 
-		logData := LogQuery{
-			Query:     query,
-			Time:      time.Now().Format(time.RFC3339),
-		}
+		//logData := LogQuery{
+	
+	//		Query:     query,
+	//		Time:      time.Now().Format(time.RFC3339),
+	//	}
 		// go logQuery(logData, s3Client)
 
 		return c.Render("search", fiber.Map{

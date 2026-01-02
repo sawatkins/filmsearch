@@ -1,13 +1,10 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"log"
 	"os"
 
-	"github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/service/s3"
 	tmdb "github.com/cyruzin/golang-tmdb"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -31,11 +28,11 @@ func main() {
 	openaiClient := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
 	tmdbClient, _ := tmdb.Init(os.Getenv("TMDB_API_KEY"))
 
-	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion("us-west-1"))
-	if err != nil {
-		log.Fatalf("Failed to load AWS configuration, %v", err)
-	}
-	s3Client := s3.NewFromConfig(cfg)
+	//cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion("us-west-1"))
+	//if err != nil {
+//		log.Fatalf("Failed to load AWS configuration, %v", err)
+//	}
+	//s3Client := s3.NewFromConfig(cfg)
 
 	engine := html.New("./views", ".html")
 	if *dev {
@@ -53,7 +50,7 @@ func main() {
 	app.Static("/", "./static")
 
 	app.Get("/", handlers.Index)
-	app.Get("/search", handlers.Search(s3Client))
+	app.Get("/search", handlers.Search())
 	app.Get("/search-results", handlers.SearchResults(openaiClient, tmdbClient))
 	app.Get("/about", handlers.About)
 	app.Use(handlers.NotFound)
