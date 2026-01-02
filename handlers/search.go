@@ -48,7 +48,7 @@ func Search(s3Client *s3.Client) fiber.Handler {
 			Query:     query,
 			Time:      time.Now().Format(time.RFC3339),
 		}
-		go logQuery(logData, s3Client)
+		// go logQuery(logData, s3Client)
 
 		return c.Render("search", fiber.Map{
 			"Title":       "FilmSearch - Search",
@@ -187,7 +187,7 @@ func unmarshallMovieTitles(data string) ([]string, []string) {
 
 // logQuery logs the query to the s3 bucket
 func logQuery(logData LogQuery, s3Client *s3.Client) {
-	// TODO: better logging
+	// TODO: log to an actual db
 	csvLine := fmt.Sprintf("%s,%s\n", logData.Query, logData.Time)
 
 	getObjectOutput, err := s3Client.GetObject(context.TODO(), &s3.GetObjectInput{
